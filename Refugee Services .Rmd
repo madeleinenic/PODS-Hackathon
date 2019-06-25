@@ -1,0 +1,112 @@
+---
+title: "Refugee Services"
+author: "Garima Karia"
+date: "21/06/2019"
+output:
+  html_document: default
+  pdf_document: default
+---
+### Refugee Services Canada
+
+In keeping with our focus on refugee resettlement in Canada, we sought to visualize the various services refugees access in Canada upon resettling in order to better understand which services are most/leased accessed for policy reform and/or funding purposes.
+
+The services are:
+- Community connections 
+- Employment-related services 
+- Information and orientation services 
+- Language Training 
+- Language Assessment 
+- Needs Assessment and Referrals 
+- Service Delivery Improvement (no data dictionary so unclear what this is measuring, given that SDI is "a dedicated funding stream for service delivery improvements to increase the efficiency and effectiveness of the Settlement Program, informed by user-centred design principles and approaches.")
+
+The data used is from Open Canada. 
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+setwd("~/Desktop")
+library(readxl)
+service_data <- read_excel("~/Desktop/service_data.xlsx")
+```
+
+## Blended Sponsorship Refugee Plot
+```{r}
+library(ggplot2)
+service_data$`Blended Sponsorship Refugee` <- as.numeric(service_data$`Blended Sponsorship Refugee`)
+
+p1 <- ggplot(data= service_data, aes(x= Province , y= `Blended Sponsorship Refugee`, 
+                               fill= `Service Type`)) + geom_bar(stat="identity") +
+  labs(title = "Service Use", 
+       x = "Province", 
+       y = "Service Access",
+       subtitle = "Blended Sponsorship Refugees" ) + 
+  theme(plot.title = element_text(color = "brown", size = 12, face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(color = "blue", face = "bold", hjust = 0.5))
+
+p1
+```
+# Comments
+
+For refugees who fall under the blended sponsorship category, needs assessment/referrals and information/orientation services are accessed the most by refugess across the country. 
+
+## Gov-Assisted Refugee Plot
+```{r}
+service_data$`Government-Assisted Refugee` <- as.numeric(service_data$`Government-Assisted Refugee`)
+
+p2 <- ggplot(data= service_data, aes(x= Province , y= `Government-Assisted Refugee`, 
+                               fill= `Service Type`)) + geom_bar(stat="identity") +
+  labs(title = "Service Use", 
+       x = "Province", 
+       y = "Service Access",
+       subtitle = "Government Assisted Refugees" ) + 
+  theme(plot.title = element_text(color = "brown", size = 12, face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(color = "blue", face = "bold", hjust = 0.5))
+
+p2
+```
+# Comments
+
+For refugees who fall under the "government-assisted" category, needs assessment/referrals and information/orientation services are accessed the most by refugess across the country.
+
+## Privately Sponsored Refugee Plot
+```{r}
+service_data$`Privately Sponsored Refugee` <- as.numeric(service_data$`Privately Sponsored Refugee`)
+
+p3 <- ggplot(data= service_data, aes(x= Province , y= `Privately Sponsored Refugee`, 
+                               fill= `Service Type`)) + geom_bar(stat="identity") +
+  labs(title = "Service Use", 
+       x = "Province", 
+       y = "Service Access",
+       subtitle = "Privately Sponsored Refugees" ) + 
+  theme(plot.title = element_text(color = "brown", size = 12, face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(color = "blue", face = "bold", hjust = 0.5))
+
+p3
+```
+# Comments
+
+For refugees who fall under the "privately-sponsored" category, needs assessment/referrals and information/orientation services are accessed the most by refugess across the country. In this category, far fewer access language assessment and training services vs. those under the previous sponsorship categories. 
+
+## Total Requests Plot
+```{r}
+service_data$`Total number of requests` <- as.numeric(service_data$`Total number of requests`)
+
+p4 <- ggplot(data= service_data, aes(x= Province , y= `Total number of requests`, 
+                               fill= `Service Type`)) + geom_bar(stat="identity") +
+  labs(title = "Service Use", 
+       x = "Province", 
+       y = "Service Access",
+       subtitle = "All Sponsorships" ) + 
+  theme(plot.title = element_text(color = "brown", size = 12, face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(color = "blue", face = "bold", hjust = 0.5))
+
+p4
+```
+# Comments
+
+Across sponsorships, needs assessment/referrals and information/orientation services are accessed the most by refugess across the country.
+
+Further policy research should address why language services and employment-related are under-accessed. 
